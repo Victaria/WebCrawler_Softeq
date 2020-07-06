@@ -1,5 +1,7 @@
 package com.softeq.dev.crawler;
 
+import com.opencsv.CSVWriter;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Comparator;
@@ -10,17 +12,30 @@ public class FileSaver {
     public void saveToCsv(String name, List<ResultObject> resultList) throws IOException {
         FileWriter csvWriter = new FileWriter(name);
 
-        csvWriter.append(ResultObject.getWords().toString());
-        csvWriter.append("\n");
+        CSVWriter writer = new CSVWriter(csvWriter, ',');
+
+        String[] header = new String[ ResultObject.getWords().size() + 2];
+        int i = 1;
+        header [0] = "Url";
+        for (String str : ResultObject.getWords()) {
+            header[i] = str;
+            i++;
+        }
+        header[header.length - 1] = "sum of hits";
+        writer.writeNext(header);
 
         for (ResultObject resObj : resultList) {
-            csvWriter.append(resObj.getLink());
-            csvWriter.append("  " + resObj.getHits());
-            csvWriter.append("\n");
+            String[] result = new String[resObj.getHits().split(",").length + 1];
+            result[0] = resObj.getLink();
+
+            String[] hits = resObj.getHits().split(",");
+
+            System.arraycopy(hits, 0, result, 1, result.length - 1);
+
+            writer.writeNext(result);
         }
 
-        csvWriter.flush();
-        csvWriter.close();
+        writer.close();
     }
 
     public void filterTopAndPrint() throws IOException {

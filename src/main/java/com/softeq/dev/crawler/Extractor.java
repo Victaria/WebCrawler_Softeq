@@ -25,7 +25,6 @@ public class Extractor {
         String str = "";
 
         for (String link : links) {
-            StringBuilder sb = new StringBuilder();
 
             resultObject = new ResultObject(link);
 
@@ -35,20 +34,14 @@ public class Extractor {
                 document = Jsoup.connect(link).get();
                 str = document.body().text().toLowerCase();
 
-                sb.append(link);
-
                 int j = 0;
                 int sum = 0;
 
                 for (String word : words) {
                     hits[j] = StringUtils.countMatches(str, word);
                     sum += hits[j];
-                    sb.append("  ");
-                    sb.append(StringUtils.countMatches(str, word));
                     j++;
                 }
-
-                System.out.println(" ****  " + sb);
 
                 hits[words.size()] = sum;
 
@@ -56,7 +49,7 @@ public class Extractor {
 
                 ResultObject.addToResultObjectList(resultObject);
 
-                System.out.println(" ****  " + resultObject.getHits());
+                //System.out.println(" ****  " + resultObject.getHits());
 
             } catch (IOException e) {
                 System.out.println("Not valid url ...");

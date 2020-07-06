@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 public class ResultObject {
+
     private static List<ResultObject> resultObjectList = new ArrayList<>();
     private String link;
     private static List<String> words;
@@ -53,7 +54,7 @@ public class ResultObject {
     }
 
     public void setHits(Integer[] hits) {
-        this.hits = Arrays.toString(hits);
+        this.hits = Arrays.toString(hits).replace("[", "").replace("]", "");
         setHitsResult(hits[hits.length - 1]);
     }
 
