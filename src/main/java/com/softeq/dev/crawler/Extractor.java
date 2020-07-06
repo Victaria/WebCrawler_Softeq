@@ -13,6 +13,9 @@ public class Extractor {
     private Integer[] hits;
     private ResultObject resultObject;
 
+    /**
+     * Initialize fields
+     * */
     public Extractor(Set<String> links, Set<String> words) {
         this.links = (HashSet<String>) links;
         this.words = (HashSet<String>) words;
@@ -21,6 +24,9 @@ public class Extractor {
         ResultObject.setWords(words);
     }
 
+    /**
+     * Count amount of words in each link and save to #ResultObject
+     * */
     public void countHits() {
         String str = "";
 

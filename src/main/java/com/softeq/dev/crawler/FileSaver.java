@@ -9,14 +9,17 @@ import java.util.List;
 
 public class FileSaver {
 
+    /**
+     * Save to csv file, split by ','
+     */
     public void saveToCsv(String name, List<ResultObject> resultList) throws IOException {
         FileWriter csvWriter = new FileWriter(name);
 
         CSVWriter writer = new CSVWriter(csvWriter, ',');
 
-        String[] header = new String[ ResultObject.getWords().size() + 2];
+        String[] header = new String[ResultObject.getWords().size() + 2];
         int i = 1;
-        header [0] = "Url";
+        header[0] = "Url";
         for (String str : ResultObject.getWords()) {
             header[i] = str;
             i++;
@@ -38,6 +41,10 @@ public class FileSaver {
         writer.close();
     }
 
+    /**
+     * Sort by Sum of hits and if amount of links greater than 10,
+     * take first 10 and save to 'topWords.csv' file
+     */
     public void filterTopAndPrint() throws IOException {
         List<ResultObject> resList = ResultObject.getResultObjectList();
 
@@ -52,9 +59,9 @@ public class FileSaver {
             resList = resList.subList(0, 10);
         }
 
-        for (ResultObject resultObject : resList) {
+       /* for (ResultObject resultObject : resList) {
             System.out.println(resultObject.getLink() + "  " + resultObject.getHits());
-        }
+        }*/
 
         saveToCsv("topWords.csv", resList);
     }

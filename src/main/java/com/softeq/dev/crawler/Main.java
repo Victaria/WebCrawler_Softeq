@@ -8,21 +8,24 @@ import java.util.stream.Collectors;
 
 public class Main {
 
-    private static Set<String> set;
+    private static Set<String> wordsSet;
 
     public static void main(String[] args) throws IOException {
         readAllFromConsole();
-        new Extractor(new LinksReader().getPageLinks("https://arenda911.by/measuringtools", 0, 0), set).countHits();
+        new Extractor(new LinksReader().getPageLinks("https://arenda911.by/measuringtools", 0, 0), wordsSet).countHits();
 
         new FileSaver().saveToCsv("new.csv", ResultObject.getResultObjectList());
         new FileSaver().filterTopAndPrint();
     }
 
+    /**
+     * Reading words from console and split by ','
+     * */
     public static void readAllFromConsole() {
         System.out.println("Enter words: ");
         Scanner sc = new Scanner(System.in);
-        set = Arrays.stream(sc.nextLine().split(",")).sorted().map(String::trim).collect(Collectors.toSet());
+        wordsSet = Arrays.stream(sc.nextLine().split(",")).sorted().map(String::trim).collect(Collectors.toSet());
         sc.close();
-        System.out.println(set);
+        System.out.println(wordsSet);
     }
 }

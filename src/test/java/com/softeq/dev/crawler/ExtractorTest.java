@@ -17,7 +17,8 @@ public class ExtractorTest {
         Set<String> words = new HashSet<>();
         words.add("copyright");
         words.add("пила");
-        extractor = new Extractor(new LinksReader().getPageLinks("https://arenda911.by/measuringtools", 0, 0), words);
+        extractor = new Extractor(new LinksReader()
+                .getPageLinks("https://arenda911.by/measuringtools", 0, 0), words);
     }
 
     @Test
