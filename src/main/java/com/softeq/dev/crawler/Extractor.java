@@ -9,20 +9,25 @@ import java.util.*;
 
 public class Extractor {
     private HashSet<String> links;
-    private List<String> words;
-    int[][] hits;
+    private HashSet<String> words;
+    private Integer[] hits;
+    private ResultObject resultObject;
 
     public Extractor(Set<String> links, Set<String> words) {
         this.links = (HashSet<String>) links;
-        this.words = new ArrayList<>(words);
-        hits = new int[links.size()][words.size() + 1];
+        this.words = (HashSet<String>) words;
+        hits = new Integer[words.size() + 1];
+
+        ResultObject.setWords(words);
     }
 
-    public void countHits() throws IOException {
+    public void countHits() {
         String str = "";
-        int i = 0;
+
         for (String link : links) {
             StringBuilder sb = new StringBuilder();
+
+            resultObject = new ResultObject(link);
 
             Document document;
 
@@ -33,9 +38,11 @@ public class Extractor {
                 sb.append(link);
 
                 int j = 0;
+                int sum = 0;
 
                 for (String word : words) {
-                    hits[i][j] = StringUtils.countMatches(str, word);
+                    hits[j] = StringUtils.countMatches(str, word);
+                    sum += hits[j];
                     sb.append("  ");
                     sb.append(StringUtils.countMatches(str, word));
                     j++;
@@ -43,37 +50,20 @@ public class Extractor {
 
                 System.out.println(" ****  " + sb);
 
+                hits[words.size()] = sum;
+
+                resultObject.setHits(hits);
+
+                ResultObject.addToResultObjectList(resultObject);
+
+                System.out.println(" ****  " + resultObject.getHits());
+
             } catch (IOException e) {
+                System.out.println("Not valid url ...");
                 System.err.println(e.getMessage());
             }
-
-            i++;
-        }
-        sortAndSeparateResult();
-         System.out.println(str);
-    }
-
-    public void sortAndSeparateResult() {
-        for (int i = 0; i < links.size(); i++) {
-            int sum = 0;
-            for (int j = 0; j < words.size(); j++) {
-                System.out.print(hits[i][j] + "  ");
-                sum += hits[i][j];
-            }
-            hits[i][words.size()] = sum;
-            System.out.print(sum);
-            System.out.println("");
         }
 
-        System.out.println("============================================");
-
-        Arrays.sort(hits, (x, y) -> y[words.size()]-x[words.size()]);
-        for (int[] i : hits)
-        {
-            for (int j : i)
-                System.out.print(String.format("%3d", j));
-            System.out.println();
-        }
     }
 
 }

@@ -5,12 +5,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.HashSet;
 
 public class LinksReader {
     private static final int MAX_DEPTH = 2;
-    private static final int MAX_COUNT = 3;
+    private static final int MAX_COUNT = 15;
     private HashSet<String> links;
 
     public LinksReader() {
@@ -29,19 +29,22 @@ public class LinksReader {
 
                 depth++;
                 for (Element page : linksOnPage) {
-                    if (count < MAX_COUNT) {
+                    if (count < MAX_COUNT - 1) {
                         getPageLinks(page.attr("abs:href"), depth, count);
-                        count++;
                     } else {
                         return links;
                     }
+                    count++;
                 }
-            } catch (IOException e) {
+            } catch (UnknownHostException e) {
                 System.err.println("For '" + URL + "': " + e.getMessage());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
             return links;
         } else {
             return links;
         }
     }
+
 }

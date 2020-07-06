@@ -12,8 +12,10 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         readAllFromConsole();
-        //new ResultObject(new LinksReader().getPageLinks("https://farhatsweets.com/category/cakes/", 0, 0), set);
-        new Extractor(new LinksReader().getPageLinks("https://farhatsweets.com/category/cakes/", 0, 0), set).countHits();
+        new Extractor(new LinksReader().getPageLinks("https://arenda911.by/measuringtools", 0, 0), set).countHits();
+
+        new FileSaver().saveToCsv("new.csv", ResultObject.getResultObjectList());
+        new FileSaver().filterTopAndPrint();
     }
 
     public static void readAllFromConsole() {

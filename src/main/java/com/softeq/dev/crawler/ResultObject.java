@@ -1,43 +1,60 @@
 package com.softeq.dev.crawler;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-public class ResultObject implements Serializable {
-   /* private HashSet<String> links;
-    private List<String> words;
-    private int[][] hits;
+public class ResultObject {
+    private static List<ResultObject> resultObjectList = new ArrayList<>();
+    private String link;
+    private static List<String> words;
+    private String hits;
+    private Integer hitsResult;
 
-    public ResultObject(Set<String> links, Set<String> words) {
-        this.links = (HashSet<String>) links;
-        this.words = new ArrayList<>(words);
-        this.hits = new int[links.size()][words.size()];
+    public Integer getHitsResult() {
+        return hitsResult;
     }
 
-    public HashSet<String> getLinks() {
-        return links;
+    public void setHitsResult(int num) {
+        this.hitsResult = num;
     }
 
-    public void setLinks(HashSet<String> links) {
-        this.links = links;
+    public ResultObject(String link) {
+        this.link = link;
     }
 
-    public List<String> getWords() {
+    public static void setWords(Set<String> wordList) {
+        words = new ArrayList<>(wordList);
+    }
+
+    public static void addToResultObjectList(ResultObject resultObject) {
+        resultObjectList.add(resultObject);
+    }
+
+    public static List<ResultObject> getResultObjectList() {
+        return resultObjectList;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public static List<String> getWords() {
         return words;
     }
 
-    public void setWords(List<String> words) {
-        this.words = words;
-    }
-
-    public int[][] getHits() {
+    public String getHits() {
         return hits;
     }
 
-    public void setHits(int[][] hits) {
-        this.hits = hits;
-    }*/
+    public void setHits(Integer[] hits) {
+        this.hits = Arrays.toString(hits);
+        setHitsResult(hits[hits.length - 1]);
+    }
+
 }
