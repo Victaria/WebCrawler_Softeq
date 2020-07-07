@@ -59,9 +59,9 @@ public class FileSaver {
             resList = resList.subList(0, 10);
         }
 
-       /* for (ResultObject resultObject : resList) {
+        for (ResultObject resultObject : resList) {
             System.out.println(resultObject.getLink() + "  " + resultObject.getHits());
-        }*/
+        }
 
         saveToCsv("topWords.csv", resList);
     }

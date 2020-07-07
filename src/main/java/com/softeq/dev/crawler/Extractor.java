@@ -15,7 +15,7 @@ public class Extractor {
 
     /**
      * Initialize fields
-     * */
+     */
     public Extractor(Set<String> links, Set<String> words) {
         this.links = (HashSet<String>) links;
         this.words = (HashSet<String>) words;
@@ -26,7 +26,7 @@ public class Extractor {
 
     /**
      * Count amount of words in each link and save to #ResultObject
-     * */
+     */
     public void countHits() {
         String str = "";
 
@@ -57,8 +57,9 @@ public class Extractor {
 
                 //System.out.println(" ****  " + resultObject.getHits());
 
+            } catch (IllegalArgumentException ia) {
+                System.err.println("Invalid Url.");
             } catch (IOException e) {
-                System.out.println("Not valid url ...");
                 System.err.println(e.getMessage());
             }
         }
